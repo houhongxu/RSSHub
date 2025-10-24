@@ -52,9 +52,7 @@ async function handler(ctx) {
         },
     });
 
-    const {
-        user: { screen_name },
-    } = await ofetch('https://xueqiu.com/statuses/original/show.json', {
+    const statuses = await ofetch('https://xueqiu.com/statuses/original/show.json', {
         query: {
             user_id: id,
         },
@@ -63,6 +61,8 @@ async function handler(ctx) {
             Referer: `https://xueqiu.com/u/${id}`,
         },
     });
+
+    const screen_name = statuses?.user?.screen_name ?? '';
 
     return {
         title: `${screen_name} 的雪球自选动态`,

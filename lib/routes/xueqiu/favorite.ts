@@ -46,9 +46,7 @@ async function handler(ctx) {
     });
     const data = res2.data.list;
 
-    const {
-        user: { screen_name },
-    } = await ofetch('https://xueqiu.com/statuses/original/show.json', {
+    const statuses = await ofetch('https://xueqiu.com/statuses/original/show.json', {
         query: {
             user_id: id,
         },
@@ -57,6 +55,8 @@ async function handler(ctx) {
             Referer: link,
         },
     });
+
+    const screen_name = statuses?.user?.screen_name ?? '';
 
     return {
         title: `${screen_name} 的雪球收藏动态`,
